@@ -1,0 +1,21 @@
+@media only screen and (min-width: 320px) {
+    .div-mainCovid19Data {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .div-mainCovid19Data h3 {
+            display: block;
+            text-align: center;
+        }
+
+        .div-mainCovid19Data ul {
+            list-style: none;
+            text-align: center;
+        }
+
+            .div-mainCovid19Data ul li::content {
+                
+            }
+}

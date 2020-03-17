@@ -14,6 +14,7 @@ body {
 @media only screen and (min-width: 320px) {
   #root {
     display: flex;
+    flex-direction: column;
     padding: 30px;
     position: absolute;
     width: 100%;
@@ -21,49 +22,5 @@ body {
     color: darkblue;
     font-size: 18px;
     font-weight: 600;
-  }
-
-    #root .main-div form {
-      text-align: center;
-      padding: 5px;
-      width: 100%;
-    }
-
-      #root .main-div form .div-label-and-input {
-        display: inline-flex;
-        flex-direction: column;
-        padding: 5px;
-        width: 100%;
-      }
-  
-        #root .main-div form .div-label-and-input label {
-          display: block;
-        }
-
-        #root .main-div .div-label-and-input input {
-          margin: 3px 5px 0 0;
-          padding: 5px 0;
-          width: 100%;
-          transition: ease-out 0.5s;
-        }
-  
-          #root .main-div .div-label-and-input input:active {
-            border: 0.1em solid darkblue;
-          }
-  
-        #root .main-div button {
-          padding: 5px;
-          box-shadow: none;
-          text-shadow: none;
-          transition: ease-out 0.5s;
-        }
-  
-          #root .main-div button:active {
-            background-color: darkblue;
-            color: #ffffff;
-          }
-  
-  #main-information-div {
-  
   }
 }
