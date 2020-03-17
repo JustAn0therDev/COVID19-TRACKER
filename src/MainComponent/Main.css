@@ -26,7 +26,7 @@
           }
     
             #root .main-div .div-label-and-input input:active {
-              border: 0.1em solid darkblue;
+              border: 0.1em solid #63DF21;
             }
     
           #root .main-div button {
@@ -37,7 +37,7 @@
           }
     
             #root .main-div button:active {
-              background-color: darkblue;
+              background-color: #63DF21;
               color: #ffffff;
             }
     

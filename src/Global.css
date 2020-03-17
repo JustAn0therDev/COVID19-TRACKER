@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-content: center;
-  background-color: #63DF21;
+  background-color: #15202B;
 }
 
 @media only screen and (min-width: 320px) {
@@ -19,7 +19,7 @@ body {
     position: absolute;
     width: 100%;
     justify-content: center;
-    color: darkblue;
+    color: #63DF21;
     font-size: 18px;
     font-weight: 600;
   }
