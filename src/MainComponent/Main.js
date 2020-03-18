@@ -18,7 +18,7 @@ export default function Main() {
         <>
         <div className="main-div">
             <div className="div-label-and-input">
-                <h1>COVID-19 TRACKER</h1>
+                <h1>COVID-19 CASES</h1>
                 <br />
                 <label>
                     Insert a country name (first letter always in upper case) and press enter (you can do that on your phone too)!
