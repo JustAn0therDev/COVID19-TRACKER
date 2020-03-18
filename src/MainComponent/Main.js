@@ -6,29 +6,36 @@ export default function Main() {
     const [countryInputValue, setCountryInputValue] = useState('');
     const [country, setCountry] = useState('');
 
+    function checkValueAndEnterKey(ev) {
+        let countryName = ev.target.value.replace(/\W/g, '');
+        if (ev.key === 'Enter')
+            setCountry(countryName);
+        else 
+            setCountryInputValue(countryName);
+    }
+
     return (
         <>
         <div className="main-div">
-            <form>
-                <div className="div-label-and-input">
-                    <h1>COVID-19 TRACKER</h1>
-                    <br />
-                    <label>
-                        Insert a country name (first letter in upper case) and click on the button!
-                    </label>
-                    <input 
-                    id="input-search"
-                    placeholder="Leave it blank to search for the total of Coronavirus cases"
-                    onChange={(ev) => { ev.preventDefault(); setCountryInputValue(ev.target.value); }}
-                    />
-                </div>
-                <button id="btn-search" type="button" onClick={(ev) => { ev.preventDefault(); setCountry(countryInputValue) }}>
-                    Search!
-                </button>
-             </form>
+            <div className="div-label-and-input">
+                <h1>COVID-19 TRACKER</h1>
+                <br />
+                <label>
+                    Insert a country name (first letter always in upper case) and press enter (you can do that on your phone too)!
+                </label>
+                <small>If data for the specified country is not found, a list of all the world's cases will be returned.</small>
+                <input 
+                id="input-search"
+                placeholder="Search for 'World' to retrieve all COVID-19 cases"
+                onKeyPress={(ev) => { checkValueAndEnterKey(ev); }}
+                />
+            </div>
+            {/* <button id="btn-search" type="button" onClick={() => { setCountry(countryInputValue) }}>
+                Search!
+            </button> */}
         </div>
         <br />
-        <MainCovid19Data key={''} country={country}></MainCovid19Data>
+        <MainCovid19Data country={country}></MainCovid19Data>
         </>
     )
 }

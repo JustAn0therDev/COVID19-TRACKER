@@ -5,7 +5,7 @@
         justify-content: center;
     }
 
-        .div-mainCovid19Data h3 {
+        .div-mainCovid19Data h3, .div-mainCovid19Data p {
             display: block;
             text-align: center;
         }
@@ -14,8 +14,4 @@
             list-style: none;
             text-align: center;
         }
-
-            .div-mainCovid19Data ul li::content {
-                
-            }
 }
