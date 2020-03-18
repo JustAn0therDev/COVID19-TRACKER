@@ -26,7 +26,7 @@ export default function Main() {
              </form>
         </div>
         <br />
-        <MainCovid19Data props={country}></MainCovid19Data>
+        <MainCovid19Data country={country}></MainCovid19Data>
         </>
     )
 }

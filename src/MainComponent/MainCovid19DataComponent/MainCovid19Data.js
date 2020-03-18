@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import './MainCovid19Data.css';
 import axios from "axios";
 
-export default function MainCovid19Data(props) {
+export default function MainCovid19Data({ country }) {
 
     const [componentResponseState, setComponentResponseState] = useState('');
 
-    useEffect(() => async function getCovid19DataFromSpecifiedCountry(country) {
-        var response = await axios.get('https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats', {
+    async function getCovid19DataFromSpecifiedCountry(country) {
+        let response = await axios.get('https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats', {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -18,23 +18,29 @@ export default function MainCovid19Data(props) {
                 "country": country
             }
         });
-        setComponentResponseState(response.data);
-    }, [props.country, componentResponseState]);
+        setComponentResponseState(response.data.data);
+    }
+
+    useEffect(() => {
+        if (country)
+            getCovid19DataFromSpecifiedCountry(country);
+    }, [country])
 
     return (
         <div className="div-mainCovid19Data">
             <ul>
-            { componentResponseState.covid19Stats ? componentResponseState.covid19Stats.map(data =>(
+            { componentResponseState.covid19Stats ? componentResponseState.covid19Stats.map(data => (
                 <>
                     <li>Provincia: {data.province}</li>
-                    <li>Ultima atualizacao: {data.lastUpdate.toLocaleDateString('pt-BR')}</li>
+                    <li>Ultima atualizacao: {new Date(data.lastUpdate).toLocaleDateString('pt-BR')}</li>
                     <li>Casos Confirmados: {data.confirmed}</li>
                     <li>Mortes: {data.deaths}</li>
                     <li>Recuperados: {data.recovered}</li>
                     <br />
                 </>
                 )
-            ) : <p>Search a country!</p> }
+            ) : <p>Search for a country!</p> }
+            <br />
                 <li>Ultima verificacao: n tem</li>
                 <li>Total de Casos confirmados: 10</li>
                 <li>Total de Mortes: 1</li>
