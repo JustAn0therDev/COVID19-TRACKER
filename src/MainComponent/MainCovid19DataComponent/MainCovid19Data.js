@@ -4,6 +4,23 @@ import axios from "axios";
 
 export default function MainCovid19Data({ country }) {
 
+    var totalConfirmed = 0;
+    var totalDeaths = 0;
+    var totalRecovered = 0;
+    
+    const [confirmed, setConfirmed] = useState(0);
+    const [recovered, setRecovered] = useState(0);
+    const [deaths, setDeaths] = useState(0);
+
+    function SumTotalOfCases(confirmed, deaths, recovered) {
+        totalConfirmed += confirmed;
+        totalDeaths += deaths;
+        totalRecovered += recovered;
+        setConfirmed(totalConfirmed);
+        setDeaths(totalDeaths);
+        setRecovered(totalRecovered);
+    }
+
     const [componentResponseState, setComponentResponseState] = useState('');
 
     async function getCovid19DataFromSpecifiedCountry(country) {
@@ -18,7 +35,12 @@ export default function MainCovid19Data({ country }) {
                 "country": country
             }
         });
+
         setComponentResponseState(response.data.data);
+
+        response.data.data.covid19Stats.forEach(element => {
+            SumTotalOfCases(element.confirmed, element.deaths, element.recovered);
+        });
     }
 
     useEffect(() => {
@@ -31,20 +53,20 @@ export default function MainCovid19Data({ country }) {
             <ul>
             { componentResponseState.covid19Stats ? componentResponseState.covid19Stats.map(data => (
                 <>
-                    <li>Provincia: {data.province}</li>
-                    <li>Ultima atualizacao: {new Date(data.lastUpdate).toLocaleDateString('pt-BR')}</li>
-                    <li>Casos Confirmados: {data.confirmed}</li>
-                    <li>Mortes: {data.deaths}</li>
-                    <li>Recuperados: {data.recovered}</li>
+                    <li>Province/State: {data.province ? data.province : 'N/A'}</li>
+                    <li>Last Update: {new Date(data.lastUpdate).toLocaleDateString('pt-BR')}</li>
+                    <li>Confirmed Cases: {data.confirmed}</li>
+                    <li>Confirmed Deaths: {data.deaths}</li>
+                    <li>Recovered: {data.recovered}</li>
                     <br />
                 </>
                 )
-            ) : <p>Search for a country!</p> }
+            ) : <p>Search for a country name!</p> }
             <br />
-                <li>Ultima verificacao: n tem</li>
-                <li>Total de Casos confirmados: 10</li>
-                <li>Total de Mortes: 1</li>
-                <li>Total de Recuperados: 9</li>
+                <li>Last checked: {componentResponseState.lastChecked ? new Date(componentResponseState.lastChecked).toLocaleDateString('pt-BR') : 'N/A'}</li>
+                <li>Total of Confirmed Cases: {confirmed}</li>
+                <li>Total of Confirmed Deaths: {deaths}</li>
+                <li>Total of Recovered: {recovered}</li>
             </ul>
         </div>
     )

@@ -11,6 +11,8 @@ export default function Main() {
         <div className="main-div">
             <form>
                 <div className="div-label-and-input">
+                    <h1>COVID-19 TRACKER</h1>
+                    <br />
                     <label>
                         Insert a country name
                     </label>
@@ -26,7 +28,7 @@ export default function Main() {
              </form>
         </div>
         <br />
-        <MainCovid19Data country={country}></MainCovid19Data>
+        <MainCovid19Data key={''} country={country}></MainCovid19Data>
         </>
     )
 }
