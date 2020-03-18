@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './MainCovid19Data.css';
 import axios from "axios";
+import config from "../../Config/ConfigurationVariables";
 
 export default function MainCovid19Data({ country }) {
 
@@ -28,8 +29,8 @@ export default function MainCovid19Data({ country }) {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
-	            "x-rapidapi-key": "4d05572d05msh8850743a12d5d73p17280fjsn86033a0fdb9a"
+                "x-rapidapi-host": config.xRapidAPIHost,
+	            "x-rapidapi-key": config.xRapidAPIKey
             },
             params: {
                 "country": country
