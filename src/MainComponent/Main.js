@@ -22,7 +22,7 @@ export default function Main() {
                     onChange={(ev) => { ev.preventDefault(); setCountryInputValue(ev.target.value); }}
                     />
                 </div>
-                <button id="btn-search" type="button" onClick={() => { setCountry(countryInputValue) }}>
+                <button id="btn-search" type="button" onClick={(ev) => { ev.preventDefault(); setCountry(countryInputValue) }}>
                     Search!
                 </button>
              </form>
