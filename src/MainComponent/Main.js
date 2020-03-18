@@ -14,7 +14,7 @@ export default function Main() {
                     <h1>COVID-19 TRACKER</h1>
                     <br />
                     <label>
-                        Insert a country name (first letter in upper case)
+                        Insert a country name (first letter in upper case) and click on the button!
                     </label>
                     <input 
                     id="input-search"
