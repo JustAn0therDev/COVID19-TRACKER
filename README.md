@@ -4,4 +4,6 @@ Due to the COVID-19 events, this react app was made with the intention of lettin
 
 Another simple [Windows Application project was made using C#](https://github.com/JustAn0therDev/boomerremover/) first but I didn't want people to have the trouble of installing or not being able to use the application on a different OS. If you have any ideas for features or bugs, you can either create a Pull Request or open and issue.
 
+To see the application running, enter [this URL](https://justan0therdev.github.io/COVID19-TRACKER/)
+
 This project was created with [Create React App](https://github.com/facebook/create-react-app).
