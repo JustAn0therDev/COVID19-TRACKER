@@ -23,7 +23,9 @@ export default function Main() {
                 <label>
                     Insert a country name (first letter always in upper case) and press enter (you can do that on your phone too)!
                 </label>
-                <small>If data for the specified country is not found, a list of all the world's cases will be returned.</small>
+                <small>
+                    If data for the specified country is not found, a list of all the world's cases will be returned (it can be slow and get laggy).
+                </small>
                 <input 
                 id="input-search"
                 placeholder="Search for 'World' to retrieve all COVID-19 cases"
