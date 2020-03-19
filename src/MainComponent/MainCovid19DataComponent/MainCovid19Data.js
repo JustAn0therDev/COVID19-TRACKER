@@ -40,7 +40,7 @@ export default function MainCovid19Data({ country }) {
         setCovid19Data(response.data);
 
         response.data.data.covid19Stats.forEach(async element => {
-            SumTotalOfCases(element.confirmed, element.deaths, element.recovered);
+            await SumTotalOfCases(element.confirmed, element.deaths, element.recovered);
             setConfirmed(totalConfirmed);
             setDeaths(totalDeaths);
             setRecovered(totalRecovered);
