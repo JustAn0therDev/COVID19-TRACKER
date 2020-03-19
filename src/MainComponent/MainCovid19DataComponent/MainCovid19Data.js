@@ -15,9 +15,9 @@ export default function MainCovid19Data({ country }) {
     const [isLoading, setIsLoading] = useState('');
 
     async function SumTotalOfCases(confirmed, deaths, recovered) {
-        totalConfirmed += confirmed;
-        totalDeaths += deaths;
-        totalRecovered += recovered;
+        totalConfirmed += await confirmed;
+        totalDeaths += await deaths;
+        totalRecovered += await recovered;
     }
 
     const [covid19Data, setCovid19Data] = useState('');
