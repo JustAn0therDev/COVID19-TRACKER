@@ -30,9 +30,6 @@ export default function Main() {
                 onKeyPress={(ev) => { checkValueAndEnterKey(ev); }}
                 />
             </div>
-            {/* <button id="btn-search" type="button" onClick={() => { setCountry(countryInputValue) }}>
-                Search!
-            </button> */}
         </div>
         <br />
         <MainCovid19Data country={country}></MainCovid19Data>
