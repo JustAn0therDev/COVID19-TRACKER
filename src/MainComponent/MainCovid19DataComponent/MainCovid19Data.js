@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './MainCovid19Data.css';
 import axios from "axios";
 import config from "../../Config/ConfigurationVariables";
+import wordTransformer from '../../Utils/TransformFirstLetterInUpperCase';
 
 export default function MainCovid19Data({ country }) {
 
@@ -33,7 +34,7 @@ export default function MainCovid19Data({ country }) {
 	            "x-rapidapi-key": config.xRapidAPIKey
             },
             params: {
-                "country": country
+                "country": await wordTransformer(country)
             }
         });
 

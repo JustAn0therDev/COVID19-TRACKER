@@ -21,7 +21,7 @@ export default function Main() {
                 <h1>COVID-19 CASES</h1>
                 <br />
                 <label>
-                    Insert a country name (first letter always in upper case) and press enter (you can do that on your phone too)!
+                    Insert a country name and press enter (you can do that on your phone too)!
                 </label>
                 <small>
                     If data for the specified country is not found, a list of all the world's cases will be returned.
