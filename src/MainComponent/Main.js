@@ -7,11 +7,11 @@ export default function Main() {
     const [country, setCountry] = useState('');
 
     function checkValueAndEnterKey(ev) {
-        let countryName = ev.target.value.replace(/\W/g, '');
+        setCountryInputValue(ev.target.value.replace(/\W/g, ''));
         if (ev.key === 'Enter')
-            setCountry(countryName);
+            setCountry(countryInputValue);
         else 
-            setCountryInputValue(countryName);
+            setCountryInputValue(countryInputValue);
     }
 
     return (
