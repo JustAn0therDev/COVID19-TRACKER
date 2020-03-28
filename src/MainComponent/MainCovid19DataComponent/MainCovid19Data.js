@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./MainCovid19Data.css";
-import axios from "axios";
 import config from "../../Config/ConfigurationVariables";
-import wordTransformer from "../../Utils/TransformFirstLetterInUpperCase";
+import turnFirstLetterIntoUpperCase from "../../Utils/turnFirstLetterIntoUpperCase";
+
+import "./MainCovid19Data.css";
+
+import axios from "axios";
 
 export default function MainCovid19Data({ country }) {
   let totalConfirmed = 0;
@@ -18,28 +20,37 @@ export default function MainCovid19Data({ country }) {
   useEffect(() => {
     let countryValueIsNotEmpty = country ? true : false;
 
-    async function CallCovid19StatsApiService() {
+    async function checkCountryValueToMakeRequest() {
       if (countryValueIsNotEmpty)
-        if (country.toLowerCase() !== "usa") {
-          let countryWithOnlyFirstLetterInUpperCase = await wordTransformer(
+        if (country.toLowerCase() === "usa") {
+          await getCovid19DataFromSpecifiedCountry("USA");
+        } else {
+          let countryWithOnlyFirstLetterInUpperCase = await turnFirstLetterIntoUpperCase(
             country
           );
           await getCovid19DataFromSpecifiedCountry(
             countryWithOnlyFirstLetterInUpperCase
           );
-        } else {
-          await getCovid19DataFromSpecifiedCountry(country);
         }
     }
-    CallCovid19StatsApiService();
+
+    checkCountryValueToMakeRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [country]);
 
-  const getCovid19DataFromSpecifiedCountry = async country => {
+  async function getCovid19DataFromSpecifiedCountry(country) {
     setIsLoading(true);
 
-    let response = await axios.get(
-      "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats",
-      {
+    let getCovid19StatsResponse = await getCovid19Stats(country);
+    if (!getCovid19StatsResponse) return;
+
+    setAllExistingVariablesStates(getCovid19StatsResponse.data);
+  }
+
+  async function getCovid19Stats(country) {
+    let apiResponse;
+    await axios
+      .get("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -47,31 +58,42 @@ export default function MainCovid19Data({ country }) {
           "x-rapidapi-key": config.xRapidAPIKey
         },
         params: {
-          country: country
+          country
         }
-      }
-    );
+      })
+      .then(async response => {
+        apiResponse = await response.data;
+      })
+      .catch(error => {
+        alert(error);
+      });
+    if (!apiResponse || apiResponse.error) return undefined;
 
-    response.data.data.covid19Stats.forEach(async element => {
-     await SumTotalOfCases(
-        element.confirmed,
-        element.deaths,
-        element.recovered
+    apiResponse.data.covid19Stats.forEach(async currentProvinceOrState => {
+      await SumTotalOfCases(
+        currentProvinceOrState.confirmed,
+        currentProvinceOrState.deaths,
+        currentProvinceOrState.recovered
       );
-
-      setConfirmed(totalConfirmed);
-      setDeaths(totalDeaths);
-      setRecovered(totalRecovered);
     });
 
-    setIsLoading(false);
-    setCovid19Data(response.data);
-  };
+    return apiResponse;
+  }
 
   async function SumTotalOfCases(confirmed, deaths, recovered) {
     totalConfirmed += confirmed;
     totalDeaths += deaths;
     totalRecovered += recovered;
+  }
+
+  async function setAllExistingVariablesStates(covid19CasesAndStats) {
+    setCovid19Data(covid19CasesAndStats);
+
+    setConfirmed(totalConfirmed);
+    setDeaths(totalDeaths);
+    setRecovered(totalRecovered);
+
+    setIsLoading(false);
   }
 
   return (
@@ -85,17 +107,24 @@ export default function MainCovid19Data({ country }) {
         ""
       )}
       <ul>
-        {covid19Data.data && covid19Data.data.covid19Stats.length <= 10 ? (
-          covid19Data.data.covid19Stats.map(data => (
+        {covid19Data && covid19Data.covid19Stats.length <= 10 ? (
+          covid19Data.covid19Stats.map(currentProvinceOrState => (
             <>
-              <li>Province/State: {data.province ? data.province : "N/A"}</li>
+              <li>
+                Province/State:{" "}
+                {currentProvinceOrState.province
+                  ? currentProvinceOrState.province
+                  : currentProvinceOrState.keyId}
+              </li>
               <li>
                 Last Update:{" "}
-                {new Date(data.lastUpdate).toLocaleDateString("pt-BR")}
+                {new Date(currentProvinceOrState.lastUpdate).toLocaleDateString(
+                  "pt-BR"
+                )}
               </li>
-              <li>Confirmed Cases: {data.confirmed}</li>
-              <li>Confirmed Deaths: {data.deaths}</li>
-              <li>Recovered: {data.recovered}</li>
+              <li>Confirmed Cases: {currentProvinceOrState.confirmed}</li>
+              <li>Confirmed Deaths: {currentProvinceOrState.deaths}</li>
+              <li>Recovered: {currentProvinceOrState.recovered}</li>
               <br />
             </>
           ))
@@ -105,8 +134,8 @@ export default function MainCovid19Data({ country }) {
         <br />
         <li>
           Last checked:{" "}
-          {covid19Data.lastChecked
-            ? new Date(covid19Data.data.lastChecked).toLocaleDateString("pt-BR")
+          {covid19Data && covid19Data.lastChecked
+            ? new Date(covid19Data.lastChecked).toLocaleDateString("pt-BR")
             : "N/A"}
         </li>
         <li>Total of Confirmed Cases: {confirmed}</li>

@@ -1,4 +1,4 @@
-export default async function transformFirstLetterInUpperCase(word) {
+export default async function turnFirstLetterIntoUpperCase(word) {
   let arrayOfLetters = await word.split("");
 
   for (let i = 0; i < arrayOfLetters.length; i++) {
