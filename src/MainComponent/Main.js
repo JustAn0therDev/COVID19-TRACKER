@@ -24,7 +24,7 @@ export default function Main() {
             <span className="underline">Things to keep in mind:</span>
             <ul>
               <li>
-                If data for the specified country is not found, a list of all
+                If data for the specified country is not found, the sum of all
                 the world's cases will be returned.
               </li>
               <li>This app is in english, so the name of the country must be as well.</li>
