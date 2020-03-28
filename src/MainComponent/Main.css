@@ -1,43 +1,56 @@
 @media only screen and (min-width: 320px) {
   #root .main-div {
-      text-align: center;
-      padding: 5px;
-      width: 100%;
-    }
-  
-      #root .main-div .div-label-and-input {
-        display: inline-flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 5px;
-        width: 100%;
-      }
-  
-        #root .main-div .div-label-and-input label {
-          display: block;
-        }
-  
-        #root .main-div .div-label-and-input input {
-          margin: 3px 5px 0 0;
-          align-self: center;
-          padding: 5px 0;
-          width: 50%;
-          transition: ease-out 0.5s;
-        }
-  
-          #root .main-div .div-label-and-input input:active {
-            border: 0.1em solid #63DF21;
-          }
-  
-        #root .main-div button {
-          padding: 7px;
-          box-shadow: none;
-          text-shadow: none;
-          transition: ease-out 0.5s;
-        }
-  
-          #root .main-div button:active {
-            background-color: #63DF21;
-            color: #ffffff;
-          }
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+  }
+
+  #root .main-div .div-label-and-input {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    width: 100%;
+  }
+
+  #root .main-div .div-label-and-input label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  #root .main-div .div-label-and-input .underline {
+    text-decoration: underline;
+  }
+
+  #root .main-div .div-label-and-input input {
+    margin: 3px 5px 0 0;
+    align-self: center;
+    padding: 5px 0;
+    width: 50%;
+    transition: ease-out 0.5s;
+  }
+
+  #root .main-div .div-label-and-input input:active {
+    border: 0.1em solid #63df21;
+  }
+
+  #root .main-div .div-label-and-input ul {
+    list-style: none;
+  }
+
+  #root .main-div .div-label-and-input ul li {
+    margin-top: 5px;
+  }
+
+  #root .main-div button {
+    padding: 7px;
+    box-shadow: none;
+    text-shadow: none;
+    transition: ease-out 0.5s;
+  }
+
+  #root .main-div button:active {
+    background-color: #63df21;
+    color: #ffffff;
+  }
 }

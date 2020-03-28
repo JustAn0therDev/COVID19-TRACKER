@@ -107,7 +107,7 @@ export default function MainCovid19Data({ country }) {
         ""
       )}
       <ul>
-        {covid19Data && covid19Data.covid19Stats.length <= 10 ? (
+        {covid19Data && covid19Data.covid19Stats.length <= 5 ? (
           covid19Data.covid19Stats.map(currentProvinceOrState => (
             <>
               <li>
