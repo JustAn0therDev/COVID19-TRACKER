@@ -22,9 +22,10 @@ export default function MainCovid19Data({ country }) {
 
     async function checkCountryValueToMakeRequest() {
       if (countryValueIsNotEmpty)
-        if (country.toLowerCase() === "usa") {
+        if (country.toLowerCase() === "usa")
+          // The API only accepts countries with the first letter in upper case, unless it's USA.
           await getCovid19DataFromSpecifiedCountry("USA");
-        } else {
+        else {
           let countryWithOnlyFirstLetterInUpperCase = await turnFirstLetterIntoUpperCase(
             country
           );
@@ -42,6 +43,7 @@ export default function MainCovid19Data({ country }) {
     setIsLoading(true);
 
     let getCovid19StatsResponse = await getCovid19Stats(country);
+
     if (!getCovid19StatsResponse) return;
 
     setAllExistingVariablesStates(getCovid19StatsResponse.data);
@@ -49,8 +51,23 @@ export default function MainCovid19Data({ country }) {
 
   async function getCovid19Stats(country) {
     let apiResponse;
-    await axios
-      .get("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats", {
+
+    apiResponse = await callRapidApiUrl(country);
+
+    apiResponse.data.covid19Stats.forEach(async currentProvinceOrState => {
+      await sumTotalOfCases(
+        currentProvinceOrState.confirmed,
+        currentProvinceOrState.deaths,
+        currentProvinceOrState.recovered
+      );
+    });
+    return apiResponse;
+  }
+
+  async function callRapidApiUrl(country) {
+    let apiCallResponse = await axios.get(
+      "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats",
+      {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -60,27 +77,12 @@ export default function MainCovid19Data({ country }) {
         params: {
           country
         }
-      })
-      .then(async response => {
-        apiResponse = await response.data;
-      })
-      .catch(error => {
-        alert(error);
-      });
-    if (!apiResponse || apiResponse.error) return undefined;
-
-    apiResponse.data.covid19Stats.forEach(async currentProvinceOrState => {
-      await SumTotalOfCases(
-        currentProvinceOrState.confirmed,
-        currentProvinceOrState.deaths,
-        currentProvinceOrState.recovered
-      );
-    });
-
-    return apiResponse;
+      }
+    );
+    return apiCallResponse.data;
   }
 
-  async function SumTotalOfCases(confirmed, deaths, recovered) {
+  async function sumTotalOfCases(confirmed, deaths, recovered) {
     totalConfirmed += confirmed;
     totalDeaths += deaths;
     totalRecovered += recovered;
