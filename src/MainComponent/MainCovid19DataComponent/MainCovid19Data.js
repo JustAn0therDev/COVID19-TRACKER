@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import config from "../../Config/ConfigurationVariables";
 import turnFirstLetterIntoUpperCase from "../../Utils/turnFirstLetterIntoUpperCase";
+import loadingGif from "../../assets/loading.gif";
 
 import "./MainCovid19Data.css";
 
@@ -102,7 +103,7 @@ export default function MainCovid19Data({ country }) {
     <div className="div-mainCovid19Data">
       {isLoading ? (
         <>
-          <p>Loading...</p>
+          <img id="img-loading-gif" src={loadingGif} alt="Loading gif" />
           <br />
         </>
       ) : (

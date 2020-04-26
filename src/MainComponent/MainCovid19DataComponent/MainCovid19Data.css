@@ -5,6 +5,12 @@
         justify-content: center;
     }
 
+        .div-mainCovid19Data #img-loading-gif {
+            height: 60px;
+            width: 60px;
+            align-self: center;
+        }
+
         .div-mainCovid19Data h3, .div-mainCovid19Data p {
             display: block;
             text-align: center;
