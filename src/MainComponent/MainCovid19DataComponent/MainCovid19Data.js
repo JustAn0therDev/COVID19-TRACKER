@@ -1,11 +1,9 @@
+import axios from "axios";
+import "./MainCovid19Data.css";
+import loadingGif from "../../assets/loading.gif";
 import React, { useState, useEffect } from "react";
 import config from "../../Config/ConfigurationVariables";
 import turnFirstLetterIntoUpperCase from "../../Utils/turnFirstLetterIntoUpperCase";
-import loadingGif from "../../assets/loading.gif";
-
-import "./MainCovid19Data.css";
-
-import axios from "axios";
 
 export default function MainCovid19Data({ country }) {
   let totalConfirmed = 0;
@@ -19,20 +17,14 @@ export default function MainCovid19Data({ country }) {
   const [covid19Data, setCovid19Data] = useState("");
 
   useEffect(() => {
-    let countryValueIsNotEmpty = country ? true : false;
-
     async function checkCountryValueToMakeRequest() {
-      if (countryValueIsNotEmpty)
+      if (country)
         if (country.toLowerCase() === "usa")
           // The API only accepts countries with the first letter in upper case, unless it's USA.
           await getCovid19DataFromSpecifiedCountry("USA");
         else {
-          let countryWithOnlyFirstLetterInUpperCase = await turnFirstLetterIntoUpperCase(
-            country
-          );
-          await getCovid19DataFromSpecifiedCountry(
-            countryWithOnlyFirstLetterInUpperCase
-          );
+            let countryWithOnlyFirstLetterInUpperCase = await turnFirstLetterIntoUpperCase(country);
+            await getCovid19DataFromSpecifiedCountry(countryWithOnlyFirstLetterInUpperCase);
         }
     }
 
@@ -43,7 +35,7 @@ export default function MainCovid19Data({ country }) {
   async function getCovid19DataFromSpecifiedCountry(country) {
     setIsLoading(true);
 
-    let getCovid19StatsResponse = await getCovid19Stats(country);
+    const getCovid19StatsResponse = await getCovid19Stats(country);
 
     if (!getCovid19StatsResponse) return;
 
@@ -51,9 +43,7 @@ export default function MainCovid19Data({ country }) {
   }
 
   async function getCovid19Stats(country) {
-    let apiResponse;
-
-    apiResponse = await callRapidApiUrl(country);
+    const apiResponse = await callRapidApiUrl(country);
 
     apiResponse.data.covid19Stats.forEach(async currentProvinceOrState => {
       await sumTotalOfCases(
@@ -105,23 +95,16 @@ export default function MainCovid19Data({ country }) {
         <>
           <img id="img-loading-gif" src={loadingGif} alt="Loading gif" />
           <br />
-        </>
-      ) : (
-        ""
-      )}
+        </> ) : ("")}
       <ul>
         {covid19Data && covid19Data.covid19Stats.length <= 5 ? (
           covid19Data.covid19Stats.map(currentProvinceOrState => (
             <>
               <li>
-                Province/State:{" "}
-                {currentProvinceOrState.province
-                  ? currentProvinceOrState.province
-                  : currentProvinceOrState.keyId}
+                Province/State: {currentProvinceOrState.province ? currentProvinceOrState.province : currentProvinceOrState.keyId}
               </li>
               <li>
-                Last Update:{" "}
-                {new Date(currentProvinceOrState.lastUpdate).toLocaleDateString(
+                Last Update: {new Date(currentProvinceOrState.lastUpdate).toLocaleDateString(
                   "pt-BR"
                 )}
               </li>
@@ -136,10 +119,7 @@ export default function MainCovid19Data({ country }) {
         )}
         <br />
         <li>
-          Last checked:{" "}
-          {covid19Data && covid19Data.lastChecked
-            ? new Date(covid19Data.lastChecked).toLocaleDateString("pt-BR")
-            : "N/A"}
+          Last checked: {covid19Data && covid19Data.lastChecked ? new Date(covid19Data.lastChecked).toLocaleDateString("pt-BR") : "N/A"}
         </li>
         <li>Total of Confirmed Cases: {confirmed}</li>
         <li>Total of Confirmed Deaths: {deaths}</li>

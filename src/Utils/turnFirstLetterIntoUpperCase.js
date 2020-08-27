@@ -1,9 +1,3 @@
 export default async function turnFirstLetterIntoUpperCase(word) {
-  let arrayOfLetters = await word.split("");
-
-  for (let i = 0; i < arrayOfLetters.length; i++) {
-    if (i === 0) arrayOfLetters[i] = await arrayOfLetters[i].toUpperCase();
-    else arrayOfLetters[i] = await arrayOfLetters[i].toLowerCase();
-  }
-  return await arrayOfLetters.join("").toString();
+    return Array.from(word).map((letter, index) => index === 0 ? letter.toUpperCase() : letter).join('')
 }
