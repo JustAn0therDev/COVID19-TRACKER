@@ -38,6 +38,12 @@ export default function Main() {
                 id="input-search"
                 placeholder="Insert a country name here!"
                 autoComplete="off"
+                onKeyPress={(ev) => {
+                  if (ev.key === "Enter") {
+                    ev.preventDefault();
+                    lookupCountry();
+                  }
+                }}
                 onKeyUp={(ev) => {
                   setCountry(ev);
                 }}
