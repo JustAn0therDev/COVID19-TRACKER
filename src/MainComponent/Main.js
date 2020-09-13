@@ -3,15 +3,15 @@ import "./Main.css";
 import MainCovid19Data from "./MainCovid19DataComponent/MainCovid19Data";
 
 export default function Main() {
-  const [inputValue, setInputValue] = useState("");
-  const [countryToBeSearched, setCountryToBeSearchedThenAlertChildComponent] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [countryToBeSearched, setCountryToBeSearchedThenAlertChildComponent] = useState('');
 
   function setCountry(ev) {
-      setInputValue(ev.target.value.replace(/\W/g, ""));
+    setInputValue(ev.target.value.replace(/\W/g, ""));
   }
 
   async function lookupCountry() {
-      setCountryToBeSearchedThenAlertChildComponent(inputValue);
+    setCountryToBeSearchedThenAlertChildComponent(inputValue);
   }
 
   return (
@@ -38,7 +38,7 @@ export default function Main() {
                 id="input-search"
                 placeholder="Insert a country name here!"
                 autoComplete="off"
-                onKeyPress={ev => {
+                onKeyUp={(ev) => {
                   setCountry(ev);
                 }}
               />
